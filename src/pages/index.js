@@ -1,30 +1,22 @@
 import React from 'react'
 import { graphql } from 'gatsby'
+import { Header } from '../components/Header'
+import { Bio } from '../components/Bio'
+import { Tags } from '../components/Tags'
+import { Posts } from '../components/Posts'
+import '../styles.css'
 
 export default function Home({ data }) {
-  console.log('>>>', data)
   const { edges: posts, group: tags } = data.allMdx
 
   return(
     <>
-      <h2>Wilson Flores Turriate</h2>
-      <h2>Tags</h2>
-      {tags.map(({ tag, totalCount }) => {
-        return(
-          <div>{tag} - {totalCount}</div>
-        )
-      })}
-      <h2>Blog</h2>
-      {posts.map(({ node }, key) => {
-        const { timeToRead, frontmatter } = node
-        const { title, date } = frontmatter
-        return(
-          <div key={key} className="flex justify-between mb-2">
-            <div>{title}</div>
-            <div>{date} - {timeToRead} min read</div>
-          </div>
-        )
-      })}
+      <Header />
+      <div className="container m-auto">
+        <Bio />
+        <Tags tags={tags} />
+        <Posts posts={posts} />
+      </div>
     </>
   )
 }
@@ -40,6 +32,7 @@ export const query = graphql`
             tags
           }
           timeToRead
+          slug
         }
       }
       group(field: frontmatter___tags) {

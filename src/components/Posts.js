@@ -1,30 +1,31 @@
 import React from 'react'
 import { Link } from 'gatsby'
-import { IconCalendar } from './IconCalendar'
-import { IconClock } from './IconClock'
+import { FaClock, FaCalendarAlt } from 'react-icons/fa'
 
 export const Posts = ({ posts }) => {
   return(
     <>
-      <h2 className="text-white text-2xl mb-6">Blog</h2>
       <div className="mb-6">
         {[...posts, ...posts].map(({ node }, key) => {
           const { timeToRead, frontmatter, slug } = node
           const { title, date } = frontmatter
           return(
-            <div key={key} className="h-24 flex flex-col justify-center border-b border-black">
-              <Link className="text-white text-2xl font-bold title" to={slug}>{title}</Link>
-              <div class="flex text-base text-gray footer">
-                <div class="flex mr-14 font-bold calendar">
-                  <IconCalendar />
-                  <div>{date}</div>
+            <Link key={key} to={slug} className="flex py-4 px-5 border-2 border-transparent border-dashed hover:border-gray-400 mb-7 rounded-md justify-between">
+              <div class="flex flex-col">
+                <h3 className="text-white text-xl font-bold">{title}</h3>
+                <p class="text-white text-sm text-gray-400">Construye logs estructurados y no estructurados con winston</p>
+              </div>  
+              <div class="flex">
+                <div class="text-white flex items-center mr-4">
+                  <FaCalendarAlt />
+                  <div className="ml-2 text-sm">{date}</div>
                 </div>
-                <div class="flex font-bold clock">
-                  <IconClock />
-                  <div>{timeToRead} min read</div>
+                <div class="text-white flex items-center">
+                  <FaClock />
+                  <div className="ml-2 text-sm">{timeToRead} min read</div>
                 </div>
               </div>
-            </div>
+            </Link>
           )
         })}
       </div>

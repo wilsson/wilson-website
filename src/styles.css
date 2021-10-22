@@ -4,5 +4,13 @@
 
 body {
   background-color: #131418;
+  font-family: Inter;
 }
 
+.highlight-line {
+  background-color: rgb(53, 59, 69);
+}
+
+.token-line {
+  padding: 0 1.25rem;
+}

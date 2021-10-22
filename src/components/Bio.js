@@ -1,18 +1,23 @@
 import React from 'react'
 
-const avatarUrl = "https://media-exp1.licdn.com/dms/image/C4E03AQFQxtRuqyvqjg/profile-displayphoto-shrink_800_800/0/1629001401165?e=1639008000&v=beta&t=HbZx1J6mlFC8s73bOaCnSpYDaqM352vV_17iVdSBgt0"
-
 export const Bio = () => {
   return(
-    <>
-      <h1 className="text-4xl font-bold text-primary mb-8">LIMITLESS</h1>
-      <div class="flex">
-        <img className="rounded-full mr-4" width="60" src={avatarUrl} />
-        <div class="description">
-          <h2 className="text-white text-2xl">Wilson Flores Turriate</h2>
-          <div className="text-gray text-lg font-bold">Software Architect at PagoEfectivo</div>
-        </div>
+    <div class="mt-16 mb-16 text-center">
+    <h2 className="
+      text-3xl
+      font-bold
+      bg-clip-text
+      text-transparent
+      bg-gradient-to-r
+      from-gray-300
+      to-blue-800
+      "
+    >
+      Wilson Flores Turriate
+    </h2>
+      <div className="text-gray-400 text-base italic">
+        Software Architect at PagoEfectivo
       </div>
-    </>
+    </div>
   )
 }

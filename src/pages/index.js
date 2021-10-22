@@ -2,7 +2,6 @@ import React from 'react'
 import { graphql } from 'gatsby'
 import { Header } from '../components/Header'
 import { Bio } from '../components/Bio'
-import { Tags } from '../components/Tags'
 import { Posts } from '../components/Posts'
 import '../styles.css'
 
@@ -14,7 +13,6 @@ export default function Home({ data }) {
       <Header />
       <div className="container m-auto">
         <Bio />
-        <Tags tags={tags} />
         <Posts posts={posts} />
       </div>
     </>

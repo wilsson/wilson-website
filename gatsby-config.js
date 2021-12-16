@@ -6,29 +6,29 @@
 
 module.exports = {
   /* Your site config here */
+  siteMetadata: {
+    title: `wilsonft83`,
+    author: 'root'
+  },
   plugins: [
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        name: `pages`,
-        path: `${__dirname}/src/posts/`,
+        name: `blog`,
+        path: `${__dirname}/blog/`,
       },
     },
-    /*
     {
-      resolve: `gatsby-plugin-typography`,
+      resolve: 'gatsby-plugin-mdx',
       options: {
-        pathToConfigModule: `src/utils/typography`,
-      },
+        extensions: ['.mdx', '.md']
+      }
     },
-    */
-    'gatsby-plugin-mdx',
     'gatsby-plugin-postcss',
     {
       resolve: `gatsby-plugin-google-fonts`,
       options: {
         fonts: [
-          //`Inter\:400,700`,
           `Inter\:700,400`,
           `JetBrains Mono`
         ],

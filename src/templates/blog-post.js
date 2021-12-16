@@ -5,6 +5,7 @@ import { MDXRenderer } from 'gatsby-plugin-mdx'
 import { MDXProvider } from "@mdx-js/react"
 import { FaClock, FaCalendarAlt } from 'react-icons/fa'
 import { Pre } from '../components/Pre'
+import '../styles.css'
 
 const H1 = props => <h1 className="text-white text-5xl font-bold mb-5" {...props} />
 const H2 = props => <h2 className="text-white text-4xl font-bold mb-5" {...props} />

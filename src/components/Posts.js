@@ -10,7 +10,7 @@ export const Posts = ({ posts }) => {
           const { timeToRead, frontmatter, slug } = node
           const { title, description, date } = frontmatter
           return(
-            <Link key={key} to={slug} className="flex py-4 px-5 border-2 border-transparent border-dashed hover:border-gray-400 mb-7 rounded-md justify-between">
+            <Link key={key} to={`${window.location.origin}/${slug}`} className="flex py-4 px-5 border-2 border-transparent border-dashed hover:border-gray-400 mb-7 rounded-md justify-between">
               <div class="flex flex-col">
                 <h3 className="text-white text-xl font-bold">{title}</h3>
                 <p class="text-white text-sm text-gray-400 max-w-sm">{description}</p>

@@ -3,7 +3,6 @@ import { Link } from 'gatsby'
 import { FaClock, FaCalendarAlt } from 'react-icons/fa'
 
 export const Posts = ({ posts }) => {
-  console.log('posts', posts)
   return(
     <>
       <div className="mb-6">

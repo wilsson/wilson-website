@@ -38,7 +38,6 @@ const components = {
 }
 
 const BlogPostTemplate = ({ data }) => {
-  console.log('data', data.mdx.frontmatter.title)
   return(
     <>
       <Header />

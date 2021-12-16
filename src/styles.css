@@ -14,3 +14,7 @@ body {
 .token-line {
   padding: 0 1.25rem;
 }
+
+li > ul {
+  margin-left: 1.8rem;
+}

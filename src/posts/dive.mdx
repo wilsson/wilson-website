@@ -1,0 +1,91 @@
+---
+title: Dive
+slug: dive
+description: "Excelente herramienta para poder explorar el interior de nuestras imágenes docker"
+date: "2021-12-06"
+tags:
+    - Docker
+---
+
+Dive es una herramienta que nos permitirá poder explorar el interior de nuestras imágenes docker.
+
+#### Características
+
+- Explorar todas las capas que contiene nuestra imagen también comandos usados en el Dockerfile y el tamaño de cada capa.
+- Indicar los diferentes cambios que se realizaron en la imagen, ejemplo: si agregamos código fuente de nuestra aplicación en la imagen.
+- También nos provee un puntaje de eficiencia de nuestra imagen.
+- Ciclos rápidos de análisis después de una construcción.
+
+#### Instalación
+___
+
+
+##### Homebrew
+
+```bash
+brew install dive
+```
+
+##### Arch
+
+```bash
+yay -S dive
+```
+
+##### Ubuntu/Debian
+
+```bash
+wget https://github.com/wagoodman/dive/releases/download/v0.9.2/dive_0.9.2_linux_amd64.deb
+sudo apt install ./dive_0.9.2_linux_amd64.deb
+```
+
+#### Uso
+
+```bash
+dive <image_hash>
+```
+
+#### Estructura
+
+![](dive-structure.png)
+
+- Sección 1: encontraremos los comandos que se usaron en nuestra receta, tamaño de la capa seleccionada y en la sección 2 podemos ver el contenido interno de dicha capa. Puedes moverte entre la sección 1 y 2 con `tab`.
+- Sección 3: Detalles específicos de nuestra imagen como:
+  - Tamaño total.
+  - Puntaje de eficiencia.
+  - Espacio potencialmente desperdiciado.
+  - Una lista de directorios posiblemente no usados.
+
+#### Entorno CI
+
+También se puede usar en un entorno de integración continua solo hay que agregar su variable de entorno `CI=true`.
+
+```bash
+CI=true dive <image_hash>
+```
+
+Además también podemos configurar umbrales en un archivo de configuración llamado `.dive-ci`
+
+```yml
+rules:
+  # Si la eficiencia se mide por debajo de X%, mark as failed.
+  # Expressed as a ratio between 0-1.
+  lowestEfficiency: 0.95
+
+  # If the amount of wasted space is at least X or larger than X, mark as failed.
+  # Expressed in B, KB, MB, and GB.
+  highestWastedBytes: 100KB
+
+  # If the amount of wasted space makes up for X% or more of the image, mark as failed.
+  # Note: the base image layer is NOT included in the total image size.
+  # Expressed as a ratio between 0-1; fails if the threshold is met or crossed.
+  highestUserWastedPercent: 0.20
+```
+
+considerando el ejemplo anterior con un tamaño de desperdicio de 100KB, tendríamos la siguiente salida
+
+![](dive-ci.png)
+
+#### Conclusión
+
+Excelente herramienta que me ayudó mucho a la hora poder optimizar imágenes docker, sin duda una herramienta a tomar en cuenta para este tipo de tareas y también a la hora de poder tener control sobre sobre la eficiencia de nuestra imagen.

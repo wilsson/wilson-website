@@ -6,17 +6,20 @@ import { MDXProvider } from "@mdx-js/react"
 import { FaClock, FaCalendarAlt } from 'react-icons/fa'
 import { Pre } from '../components/Pre'
 
-const H1 = props => <h1 className="text-white text-5xl font-bold" {...props} />
-const H2 = props => <h1 className="text-white text-4xl font-bold" {...props} />
-const H3 = props => <h1 className="text-white text-3xl font-bold" {...props} />
-const H4 = props => <h1 className="text-white text-2xl font-bold" {...props} />
-const H5 = props => <h1 className="text-white text-xl font-bold" {...props} />
-const H6 = props => <h1 className="text-white text-lg font-bold" {...props} />
-const Ul = props => <ul className="text-white list-disc list-inside" {...props} />
+const H1 = props => <h1 className="text-white text-5xl font-bold mb-5" {...props} />
+const H2 = props => <h2 className="text-white text-4xl font-bold mb-5" {...props} />
+const H3 = props => <h3 className="text-white text-3xl font-bold mb-5" {...props} />
+const H4 = props => <h4 className="text-white text-2xl font-bold mb-5" {...props} />
+const H5 = props => <h5 className="text-white text-xl font-bold mb-5" {...props} />
+const H6 = props => <h6 className="text-white text-lg font-bold mb-5" {...props} />
+const Ul = props => <ul className="text-white list-disc list-inside mb-5 leading-7" {...props} />
+const Ol = props => <ul className="text-white list-decimal list-inside mb-5 leading-7" {...props} />
 
 const MyParagraph = props => (
   <p className="text-white text-lg mb-4 mt-4" {...props} />
 )
+
+const Hr = () => <hr className="mt-2.5 mb-5" style={{ borderColor: '#1F2023' }}/>
 
 const components = {
   h1: H1,
@@ -25,10 +28,13 @@ const components = {
   h4: H4,
   h5: H5,
   h6: H6,
+  hr: Hr,
   p: MyParagraph,
   pre: props => <div {...props} />,
   code: Pre,
-  ul: Ul
+  ul: Ul,
+  ol: Ol,
+  inlineCode: (props) => <kbd className="rounded-md border-2 border-b-4 border-gray-600 px-1 text-sm" {...props} />
 }
 
 const BlogPostTemplate = ({ data }) => {

@@ -1,18 +1,16 @@
 import React from 'react'
 import { graphql } from 'gatsby'
 import { Header } from '../components/Header'
-import { Bio } from '../components/Bio'
 import { Posts } from '../components/Posts'
 import '../styles.css'
 
-export default function Home({ data }) {
+export default function Blog({ data }) {
   const { edges: posts } = data.allMdx
 
   return(
     <>
       <Header />
       <div className="container m-auto">
-        <Bio />
         <Posts posts={posts} />
       </div>
     </>

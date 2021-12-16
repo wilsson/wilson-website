@@ -5,7 +5,9 @@ import rangeParser from 'parse-numeric-range'
 
 export const styles = {
   borderRadius: '1rem',
-  fontFamily: '"JetBrains Mono", "IBM Plex Mono", "Fira Code", "Input Mono", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace'
+  fontFamily: '"JetBrains Mono", "IBM Plex Mono", "Fira Code", "Input Mono", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
+  overflow: 'hidden',
+  'overflow-x': 'scroll'
 }
 
 const calculateLinesToHighlight = (meta) => {

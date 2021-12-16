@@ -9,15 +9,6 @@ module.exports = {
       ...theme('colors'),
       'black': '#1F2023',
     }),
-    /*
-    colors: {
-      ...colors,
-      'primary': '#FF597D',
-      'white': '#EAEAEA',
-      'gray': '#858585',
-      'black': '#1F2023',
-    },
-    */
     screens: {
       'sm': '640px',
       // => @media (min-width: 640px) { ... }

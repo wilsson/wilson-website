@@ -7,7 +7,6 @@ import '../styles.css'
 
 export default function Home({ data }) {
   const { edges: posts } = data.allMdx
-
   return(
     <>
       <Header />

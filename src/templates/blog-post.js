@@ -44,12 +44,12 @@ const BlogPostTemplate = ({ data }) => {
       <div className="container m-auto mt-12 mb-4">
         <header>
           <h2 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-300 to-blue-800 mb-2">{data.mdx.frontmatter.title}</h2>
-          <div class="flex mb-10">
-            <div class="text-white flex items-center mr-4">
+          <div className="flex mb-10">
+            <div className="text-white flex items-center mr-4">
               <FaCalendarAlt />
               <div className="ml-2 text-sm">10 July, 2021</div>
             </div>
-            <div class="text-white flex items-center">
+            <div className="text-white flex items-center">
               <FaClock />
               <div className="ml-2 text-sm">1 min read</div>
             </div>

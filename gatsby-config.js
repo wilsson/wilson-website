@@ -19,6 +19,12 @@ module.exports = {
       },
     },
     {
+      resolve: `gatsby-plugin-google-analytics`,
+      options: {
+        trackingId: 'G-S2YXTXGZJZ',
+      },
+    },
+    {
       resolve: 'gatsby-plugin-mdx',
       options: {
         extensions: ['.mdx', '.md']

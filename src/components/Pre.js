@@ -7,7 +7,7 @@ export const styles = {
   borderRadius: '1rem',
   fontFamily: '"JetBrains Mono", "IBM Plex Mono", "Fira Code", "Input Mono", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
   overflow: 'hidden',
-  overflowX: 'scroll'
+  overflowX: 'auto'
 }
 
 const calculateLinesToHighlight = (meta) => {

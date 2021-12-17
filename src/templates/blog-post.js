@@ -16,7 +16,7 @@ const H6 = props => <h6 className="text-white text-lg font-bold mb-5" {...props}
 const Ul = props => <ul className="text-white list-disc list-inside mb-5 leading-7" {...props} />
 const Ol = props => <ul className="text-white list-decimal list-inside mb-5 leading-7" {...props} />
 
-const MyParagraph = props => (
+const Paragraph = props => (
   <p className="text-white text-lg mb-4 mt-4" {...props} />
 )
 
@@ -30,7 +30,7 @@ const components = {
   h5: H5,
   h6: H6,
   hr: Hr,
-  p: MyParagraph,
+  p: Paragraph,
   pre: props => <div {...props} />,
   code: Pre,
   ul: Ul,
@@ -42,9 +42,9 @@ const BlogPostTemplate = ({ data }) => {
   return(
     <>
       <Header />
-      <div className="container m-auto mt-12 mb-4">
+      <div className="container m-auto mt-12 mb-4 px-5 lg:px-0 xl:px-0 2xl:px-0">
         <header>
-          <h2 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-300 to-blue-800 mb-2">{data.mdx.frontmatter.title}</h2>
+          <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-300 to-blue-800 mb-2">{data.mdx.frontmatter.title}</h1>
           <div className="flex mb-10">
             <div className="text-white flex items-center mr-4">
               <FaCalendarAlt />

@@ -9,7 +9,7 @@ export const SEO = ({ title, description }) => (
         content: title
       },
       {
-        prop: 'og:description',
+        property: 'og:description',
         content: description
       }
     ]}

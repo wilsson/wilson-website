@@ -7,19 +7,19 @@
 module.exports = {
   /* Your site config here */
   siteMetadata: {
-    title: `wilsonft83`,
+    title: 'wilsonft83',
     author: 'root'
   },
   plugins: [
     {
-      resolve: `gatsby-source-filesystem`,
+      resolve: 'gatsby-source-filesystem',
       options: {
         name: `blog`,
         path: `${__dirname}/blog/`,
       },
     },
     {
-      resolve: `gatsby-plugin-google-analytics`,
+      resolve: 'gatsby-plugin-google-analytics',
       options: {
         trackingId: 'G-S2YXTXGZJZ',
       },
@@ -31,6 +31,7 @@ module.exports = {
       }
     },
     'gatsby-plugin-postcss',
+    'gatsby-plugin-react-helmet',
     {
       resolve: `gatsby-plugin-google-fonts`,
       options: {

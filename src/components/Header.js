@@ -10,6 +10,7 @@ export const Header = () => (
   <header className="container m-auto flex mt-4 mb-16">
     <Link to="/" {...classNameCommon} >Home</Link>
     <Link to="/blog/" {...classNameCommon} >Blog</Link>
+    <Link to="/about/" {...classNameCommon} >About</Link>
   </header>
 )
 

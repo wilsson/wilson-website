@@ -9,7 +9,7 @@ export const Post = ({
   timeToRead,
   slug,
 }) => (
-  <article data-testid="post">
+  <article>
     <Link to={`/${slug}`} className="flex py-4 px-5 border-2 border-transparent border-dashed hover:border-gray-400 mb-7 rounded-md justify-between">
       <div className="flex flex-col">
         <h3 className="text-white text-xl font-bold">{title}</h3>

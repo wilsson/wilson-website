@@ -30,8 +30,8 @@ describe('Posts', () => {
         }
       ] 
     }
-    const component = render(<Posts {...props} />) 
-    const result = component.getAllByTestId('post')
-    expect(result).toHaveLength(props.posts.length)
+    render(<Posts {...props} />) 
+    const posts = document.querySelectorAll('article')
+    expect(posts).toHaveLength(props.posts.length)
   })
 })

@@ -6,12 +6,14 @@ import { Posts } from '../components/Posts'
 import '../styles.css'
 
 export default function Home({ data }) {
+  console.log('data', data)
+  const { author, job } = data.site.siteMetadata
   const { edges: posts } = data.allMdx
   return(
     <>
       <Header />
       <div className="container m-auto">
-        <Bio />
+        <Bio author={author} job={job} />
         <Posts posts={posts} />
       </div>
     </>
@@ -20,6 +22,12 @@ export default function Home({ data }) {
 
 export const query = graphql`
   query  {
+    site {
+      siteMetadata {
+        author
+        job
+      }
+    }
     allMdx(sort: { fields: [frontmatter___date], order: DESC }) {
       edges {
         node {

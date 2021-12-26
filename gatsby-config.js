@@ -5,10 +5,10 @@
  */
 
 module.exports = {
-  /* Your site config here */
   siteMetadata: {
     title: 'wilsonft83',
-    author: 'root'
+    author: 'Wilson Flores Turriate',
+    job: 'Software Architect at PagoEfectivo'
   },
   plugins: [
     {

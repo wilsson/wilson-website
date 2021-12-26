@@ -1,7 +1,10 @@
 import React from 'react'
 
-export const Bio = () => (
-  <div class="mt-16 mb-16 text-center">
+export const Bio = ({
+  author,
+  job
+}) => (
+  <div className="mt-16 mb-16 text-center">
     <h2 className="
       text-3xl
       font-bold
@@ -12,10 +15,10 @@ export const Bio = () => (
       to-blue-800
       "
     >
-      Wilson Flores Turriate
+      {author}
     </h2>
       <div className="text-gray-400 text-base italic">
-        Software Architect at PagoEfectivo
+        {job}
       </div>
   </div>
 )

@@ -9,10 +9,10 @@ export default function Home({ data }) {
   console.log('data', data)
   const { author, job } = data.site.siteMetadata
   const { edges: posts } = data.allMdx
-  return(
+  return (
     <>
       <Header />
-      <div className="container m-auto">
+      <div className="w-full lg:w-200 m-auto">
         <Bio author={author} job={job} />
         <Posts posts={posts} />
       </div>
@@ -21,7 +21,7 @@ export default function Home({ data }) {
 }
 
 export const query = graphql`
-  query  {
+  query {
     site {
       siteMetadata {
         author

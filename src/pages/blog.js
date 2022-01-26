@@ -7,10 +7,10 @@ import '../styles.css'
 export default function Blog({ data }) {
   const { edges: posts } = data.allMdx
 
-  return(
+  return (
     <>
       <Header />
-      <div className="container m-auto">
+      <div className="w-full lg:w-200 m-auto">
         <Posts posts={posts} />
       </div>
     </>
@@ -18,7 +18,7 @@ export default function Blog({ data }) {
 }
 
 export const query = graphql`
-  query  {
+  query {
     allMdx(sort: { fields: [frontmatter___date], order: DESC }) {
       edges {
         node {

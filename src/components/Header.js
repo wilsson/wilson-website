@@ -8,7 +8,7 @@ const classNameCommon = {
 }
 
 export const Header = () => (
-  <header className="w-full lg:w-200 m-auto flex mt-4 mb-16">
+  <header className="w-full m-auto flex mt-4 mb-16 px-4 lg:w-200 lg:px-0">
     <Link to="/" {...classNameCommon}>
       Home
     </Link>

@@ -21,7 +21,7 @@ export const Post = ({ title, description, date, timeToRead, slug }) => (
         md:flex-row
       "
     >
-      <div className="flex flex-col mb-4">
+      <div className="flex flex-col mb-4 lg:mb-0">
         <h3 className="text-white text-xl font-bold">{title}</h3>
         <p className="text-white text-sm text-gray-400 max-w-sm">
           {description}

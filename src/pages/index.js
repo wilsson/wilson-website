@@ -6,7 +6,6 @@ import { Posts } from '../components/Posts'
 import '../styles.css'
 
 export default function Home({ data }) {
-  console.log('data', data)
   const { author, job } = data.site.siteMetadata
   const { edges: posts } = data.allMdx
   return (

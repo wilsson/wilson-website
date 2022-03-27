@@ -1,4 +1,5 @@
 import React from 'react'
+import { graphql } from 'gatsby'
 import '../styles.css'
 import { Header } from '../components/Header'
 import {
@@ -9,7 +10,8 @@ import {
   FaStar,
 } from 'react-icons/fa'
 
-export default function About() {
+export default function About({ data }) {
+  const { experience } = data.site.siteMetadata
   return (
     <>
       <Header />
@@ -46,41 +48,19 @@ export default function About() {
           className="ml-4 text-white border-l-4"
           style={{ borderColor: '#262626' }}
         >
-          <div className="flex mb-9">
-            <div className="-ml-4 mr-4 h-8 w-8 bg-black rounded-full flex justify-center items-center">
-              <FaFlag size="15" />
+          {experience.map(({ title, company, time }, key) => (
+            <div className="flex mb-9" key={key}>
+              <div className="-ml-4 mr-4 h-8 w-8 bg-black rounded-full flex justify-center items-center">
+                <FaFlag size="15" />
+              </div>
+              <div className="flex flex-col">
+                {title} - {company}
+                <span className="text-sm text-gray-400">
+                  {time}
+                </span>
+              </div>
             </div>
-            <div className="flex flex-col">
-              Software Architect - PagoEfectivo
-              <span className="text-sm text-gray-400">
-                Noviembre 2019 - Actualidad
-              </span>
-            </div>
-          </div>
-
-          <div className="flex mb-9">
-            <div className="-ml-4 mr-4 h-8 w-8 bg-black rounded-full flex justify-center items-center">
-              <FaFlag size="15" />
-            </div>
-            <div className="flex flex-col">
-              Frontend Developer - El Grupo el Comercio
-              <span className="text-sm text-gray-400">
-                Noviembre 2015 - Octubre 2019
-              </span>
-            </div>
-          </div>
-
-          <div className="flex mb-9">
-            <div className="-ml-4 mr-4 h-8 w-8 bg-black rounded-full flex justify-center items-center">
-              <FaFlag size="15" />
-            </div>
-            <div className="flex flex-col">
-              Frontend Developer - Clicks and Bricks
-              <span className="text-sm text-gray-400">
-                Enero 2015 - Octubre 2015
-              </span>
-            </div>
-          </div>
+          ))}
         </div>
 
         <h2 className="text-white text-2xl font-bold mb-8">Proyectos OSS</h2>
@@ -89,7 +69,7 @@ export default function About() {
           <a
             href="https://github.com/wilsson/create-webpack-application"
             target="_blank"
-            class="flex bg-black text-white items-start p-4 rounded-md mb-5 relative"
+            className="flex bg-black text-white items-start p-4 rounded-md mb-5 relative"
           >
             <div className="flex items-center absolute top-4 right-4">
               <FaStar className="text-yellow-300 mr-1.5" /> 12
@@ -105,7 +85,7 @@ export default function About() {
           <a
             href="https://github.com/wilsson/papyrum"
             target="_blank"
-            class="flex bg-black text-white items-start p-4 rounded-md mb-5 relative"
+            className="flex bg-black text-white items-start p-4 rounded-md mb-5 relative"
           >
             <div className="flex items-center absolute top-4 right-4">
               <FaStar className="text-yellow-300 mr-1.5" /> 17
@@ -125,3 +105,17 @@ export default function About() {
     </>
   )
 }
+
+export const query = graphql`
+  query {
+    site {
+      siteMetadata {
+        experience {
+          title
+          company
+          time
+        }
+      }
+    }
+  }
+`

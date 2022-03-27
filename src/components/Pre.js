@@ -40,7 +40,6 @@ export const Pre = ({ className, children, metastring }) => {
           {tokens.map((line, index) => {
             const lineProps = getLineProps({ line, key: index })
             if (shouldHighlightLine(index)) {
-              console.log('?', shouldHighlightLine(index))
               lineProps.className = `${lineProps.className} highlight-line`
             }
             return(

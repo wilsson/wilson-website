@@ -8,7 +8,29 @@ module.exports = {
   siteMetadata: {
     title: 'wilsonft83',
     author: 'Wilson Flores Turriate',
-    job: 'Software Architect at PagoEfectivo'
+    job: 'Software Engineer FullStack at PedidosYa',
+    experience: [
+      {
+        title: 'Software Engineer FullStack',
+        company: 'PedidosYa',
+        time: 'Febrero 2022 - Actualidad'
+      },
+      {
+        title: 'Software Architect',
+        company: 'PagoEfectivo',
+        time: 'Noviembre 2019 - Febrero 2022'
+      },
+      {
+        title: 'Frontend Developer',
+        company: 'El Grupo el Comercio',
+        time: 'Noviembre 2015 - Octubre 2019'
+      },
+      {
+        title: 'Frontend Developer',
+        company: ' licks and Bricks',
+        time: 'Enero 2015 - Octubre 2015'
+      }
+    ]
   },
   plugins: [
     {

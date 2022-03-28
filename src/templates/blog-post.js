@@ -13,7 +13,7 @@ const BlogPostTemplate = ({ data }) => {
     <>
       <SEO title={title} description={description}/>
       <Header />
-      <div className="container m-auto mt-12 mb-4 px-5 lg:px-0 xl:px-0 2xl:px-0">
+      <div className="w-full lg:w-200 m-auto mt-12 mb-4 px-5 lg:px-0 xl:px-0 2xl:px-0">
         <header>
           <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-300 to-blue-800 mb-2">{title}</h1>
           <div className="flex mb-10">

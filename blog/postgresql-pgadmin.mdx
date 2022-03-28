@@ -1,0 +1,141 @@
+---
+title: PostgreSQL + pgAdmin con Docker
+slug: postgresql-pgadmin
+description: "Entorno de desarrollo local para posgreSQL"
+date: "2022-03-28"
+tags:
+    - Docker
+    - PostgreSQL
+---
+
+En este post te enseño a crear una base de datos en postgreSQL y pgAdminuna herramienta de interface gráfica para poder administrarlo, todo esto con docker.
+
+#### Pre - Requisitos
+
+- Docker
+
+#### PostgreSQL
+
+Empezamos creando nuestro contenedor que creara nuestra base de datos postgreSQL.
+
+```bash
+docker run -p 5432:5432 \
+	--name postgresql-container \
+	-e 'POSTGRES_PASSWORD=mysecretpassword' \
+	-v ${PWD}/data:/var/lib/postgresql/data \
+	-d postgres
+```
+
+Entendiendo el comando anterior:
+
+- `-p` para publicar el puerto expuesto del contenedor, el primer valor es el puerto del tu host que puede ser cambiado si es que ya tienes usando actualmente el `3000` para otro proceso.
+- `—-name` es el nombre de tu contenedor.
+- `-e` para poder definir variables de entorno, una de las que definimos es para la contraseña ase de datos que es `POSTGRES_PASSWORD`
+- `-v` creamos un volumen, importante para poder persistir la información de nuestros datos dentro de nuestro `file system` y no solo dentro del contenedor, para ello usamos `${PWD}/data` para indicarle en la carpeta data del directorio actual.
+- `-d` para poder correr nuestro contenedor en segundo plano.
+- Y por ultimo `postgres` que es la imagen que estamos usando
+
+#### pgAdmin
+
+Ahora la siguiente herramienta te permitirá visualizar tus datos sin la necesidad de instalar ningún IDE
+
+```bash
+docker run -p 80:80 \
+	--name pgadmin-container \
+	-e 'PGADMIN_DEFAULT_EMAIL=user@domain.com' \
+    -e 'PGADMIN_DEFAULT_PASSWORD=SuperSecret' \
+    -d dpage/pgadmin4
+```
+
+Entendiendo el comando anterior:
+
+- `-p` como vimos anteriormente te permite publicar el puerto expuesto del contenedor y de la  misma forma puedes cambiar el primer valor si lo estas ocupando para otro proceso.
+- `—-name` es el nombre de tu contenedor.
+- `-e` como vimos anteriormente te permite crear variables de entorno.
+    - `PGADMIN_DEFAULT_EMAIL` y `PGADMIN_DEFAULT_PASSWORD` son necesarias para poder iniciar con `pgAdmin`
+- `-d` para poder correr nuestro contenedor en segundo plano.
+- y por ultimo `dpage/pgadmin4` que es la imagen que estamos usando.
+
+Podemos ver nuestra herramienta GUI directamente en el navegador `http://localhost`, ingresaremos  con los valores de nuestras variables de entorno declaras, `PGADMIN_DEFAULT_EMAIL` y `PGADMIN_DEFAULT_PASSWORD`.
+
+![](/pgadmin-home.png)
+
+Ahora registraremos un server.
+
+![](/pgadmin-create-server-1.png)
+
+Y por consiguiente agregaremos todos los valores de conexión.
+
+![](/pgadmin-create-server-2.png)
+
+Entendiendo que valores colocar:
+
+- `Host`: Colocar la ip de tu host, puedes obtenerlo con `ifconfig`.
+- `Port`: Puerto `5432` por defecto.
+- `Maitenance database`: Base de datos a conectarnos, por defecto `postgres` .
+- `Username`: Por defecto esta con el usuario `postgres`.
+- `Password`: En password colocar el valor de nuestra variable de entorno `POSTGRES_PASSWORD`.
+
+___
+
+#### Siguientes pasos
+
+Podemos automatizar el manejo de nuestros comandos de docker usando `docker-compose` de la siguiente forma:
+
+#### Pre - Requisitos
+
+- Docker Compose
+
+Creamos un fichero llamado `docker-compose.yml` en el directorio actual de nuestro proyecto:
+
+```yml
+version: '3.1'
+
+services:
+  db:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: mysecretpassword
+    ports:
+      - 5432:5432
+    volumes:
+      - ./data:/var/lib/postgresql/data
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: user@domain.com
+      PGADMIN_DEFAULT_PASSWORD: SuperSecret
+    ports:
+      - 80:80
+```
+
+Se definen nuestros 2 contenedores que queremos crear, uno para nuestra base de datos `postgreSQL` y otro para `pgAdmin` con todos los parámetros que inicialmente colocábamos en nuestros comandos de `docker run`.
+
+Ahora solo debemos ejecutar el siguiente comando:
+
+```bash
+docker-compose up -d
+```
+
+Con esto ya tenemos de forma operativa nuestra base de datos `postgreSQL` y nuestro `pgadmin`.
+
+___
+
+#### Nota
+
+Ya que todos nuestros comandos lo estamos ejecutando en segundo plano con el flag `-d` probablemente no se en algun caso puede que los contenedores no corran sus servicios de forma inmediata, si desea saber que esta ocurriendo en cada contenedor puede ejecutar el siguiente comando:
+
+```bash
+docker-compose logs
+```
+
+o directamente consultar los logs de cada contenedor individualmente.
+
+```bash
+docker logs <hash_conteiner>
+```
+
+___
+
+Si te gusto esta pequeña guía y tienes alguna duda no dudes en escribirme.

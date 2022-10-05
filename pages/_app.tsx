@@ -1,8 +1,10 @@
 import Script from 'next/script';
 import type { AppProps } from 'next/app';
+import { useAnalytics } from '~/lib/useAnalytics';
 import '~/styles/globals.css';
 
 function App({ Component, pageProps }: AppProps) {
+  useAnalytics();
   return(
     <>
       <Script strategy="afterInteractive" src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}`} />

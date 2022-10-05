@@ -6,7 +6,7 @@ function HomePage(props) {
   console.log('props', props);
   return(
     <div>
-      <h1>Welcome to Next.js + Sanity.io!</h1>
+      <h1>Welcome to Next.js + Sanity.io + Tailwindcss!</h1>
       <hr />
       <ul>
         {props.posts.map(({ title, coverImage }) => {

@@ -15,7 +15,7 @@ function HomePage({ posts }) {
             <h2 className="text-gray-300 mb-4">Sotfware Engineer FullStack at <a href="https://www.pedidosya.com" className="text-red-200 underline font-medium">PedidosYa</a></h2>
             <p className="text-gray-400 mb-8">In this place I will share everything I have learned in my technology career.</p>
             <div className="flex space-x-7">
-              <Link href={"/about"}>
+              <Link href="/about">
                 <div className="group flex space-x-2 cursor-pointer">
                   <div className="shadow-lg group-hover:scale-125 group-hover:shadow-purple-900 transition-all bg-gradient-to-tl from-purple-800 to-indigo-400  p-1 rounded-lg">
                     <IdentificationIcon className="w-[18px] text-white" />
@@ -23,12 +23,14 @@ function HomePage({ posts }) {
                   <div className="text-gray-300">About</div>
                 </div>
               </Link>
-              <div className="group flex space-x-2 cursor-pointer">
-                <div className="shadow-lg group-hover:scale-125 group-hover:shadow-purple-900 transition-all bg-gradient-to-tl from-purple-800 to-indigo-400 p-1 rounded-lg">
-                  <DocumentIcon className="w-[18px] text-white" />
+              <Link href="/blog">
+                <div className="group flex space-x-2 cursor-pointer">
+                  <div className="shadow-lg group-hover:scale-125 group-hover:shadow-purple-900 transition-all bg-gradient-to-tl from-purple-800 to-indigo-400 p-1 rounded-lg">
+                    <DocumentIcon className="w-[18px] text-white" />
+                  </div>
+                  <div className="text-gray-300">Blog</div>
                 </div>
-                <div className="text-gray-300">Blog</div>
-              </div>
+              </Link>
             </div>
           </div>
           <img className="grayscale-[70%] w-28 rounded-full mb-6" src="/avatar.jpeg" />

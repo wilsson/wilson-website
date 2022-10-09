@@ -1,5 +1,4 @@
 import { motion } from 'framer-motion';
-import { useState } from 'react';
 import { parseISO, format } from 'date-fns';
 import readingTime from 'reading-time';
 import PostInstance from '~/lib/post';
@@ -8,9 +7,45 @@ import { LikeIcon } from '~/components/LikeIcon';
 import { Navbar } from '~/components/Navbar';
 import { Footer } from '~/components/Footer';
 import { urlFor } from '~/lib/sanity'
+import { useLikes } from '~/lib/useLikes';
+import { useViews } from '~/lib/useViews';
+import { useEffect } from 'react';
+import { EllipsisHorizontalIcon } from '@heroicons/react/24/solid';
+
+const optionsAnimateLike = {
+  hide: {
+    translateY: -40,
+    opacity: 0
+  },
+  show: {
+    translateY: [0, -40],
+    opacity: [0, 1, 0]
+  }
+};
 
 const Post = ({ post, mdxSource }) => {
-  const [ like, setLike ] = useState(false);
+  const {
+    data: dataLikes,
+    incrementLikes,
+    isError: likesIsError,
+    isLoading: likesIsLoading,
+  } = useLikes({ slug: post.slug });
+
+  const {
+    data: dataViews,
+    incrementViews,
+    isError: viewsIsError,
+    isLoading: viewsIsLoading,
+  } = useViews({ slug: post.slug });
+
+  const handleLike = () => {
+    incrementLikes();
+  };
+  
+  useEffect(() => {
+    incrementViews();
+  }, []);
+
   return(
     <main className="px-8">
       <Navbar />      
@@ -20,30 +55,26 @@ const Post = ({ post, mdxSource }) => {
           <p className="text-gray-400 text-sm mb-1">
             {format(parseISO(post.date), 'MMMM dd, yyyy')} • {readingTime(post.content).text} 
           </p>
-          <div className="flex space-x-2 items-center">
-            <p className="text-gray-400 text-sm">58 views • 10 Likes</p>
-            <div className={`cursor-pointer hover:scale-125 transition-all bg-white/10 p-1 rounded-lg flex ${like ? 'bg-gradient-to-tl from-purple-800 to-indigo-400': ''}`}>
-              <button onClick={() => setLike(!like)} className="relative focus:outline-none">
-                <motion.div
-                  className="absolute w-full"
-                  animate={like ? 'show' : 'hide'}
-                  variants={{
-                    hide: {
-                      translateY: -40,
-                      opacity: 0
-                    },
-                    show: {
-                      translateY: [0, -40],
-                      opacity: [0, 1, 0]
-                    }
-                  }}
-                  initial={false}
-                >
-                  <p className="text-white">👍</p>
-                </motion.div>
-                <LikeIcon className={`w-[18px] h-[18px] ${like ? 'text-white': 'text-gray-400'}`} />
-              </button>
+           <div className="flex space-x-2 items-center">
+            <p className="text-gray-400 text-sm">
+              {(viewsIsLoading || viewsIsError) ? <EllipsisHorizontalIcon  className="w-[18px] animate-pulse inline-block"/> : dataViews.views} views
+              {" • "}
+              {(likesIsLoading || likesIsError) ? <EllipsisHorizontalIcon  className="w-[18px] animate-pulse inline-block"/> : dataLikes.likes} likes
+            </p>
+            <div className={`cursor-pointer transition-all bg-white/10 p-1 rounded-lg flex ${dataLikes?.userLike ? 'bg-gradient-to-tl from-purple-800 to-indigo-400': ''}`}>
+                <button onClick={handleLike} className="relative focus:outline-none">
+                  <motion.div
+                    className="absolute w-full"
+                    animate={dataLikes?.userLike ? 'show' : 'hide'}
+                    variants={optionsAnimateLike}
+                    initial={false}
+                  >
+                    <p className="text-white">👍</p>
+                  </motion.div>
+                  <LikeIcon className={`w-[18px] h-[18px] ${dataLikes?.userLike ? 'text-white': 'text-gray-400'}`} />
+                </button>
             </div>
+           
           </div>
         </div>
         <div className="prose dark:prose-invert max-w-none">

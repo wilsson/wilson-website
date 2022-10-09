@@ -1,0 +1,25 @@
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+  referentialIntegrity = "prisma"
+}
+
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["referentialIntegrity"]
+}
+
+model Posts {
+  id        String   @id @default(cuid())
+  slug      String   @unique
+  likes     Int      @default(0)
+  views     Int      @default(1)
+  createdAt DateTime @default(now())
+}
+
+model UsersLikes {
+  id        String   @id @default(cuid())
+  ip        String   @db.VarChar(255)
+  slug      String   @db.VarChar(255)
+  createdAt DateTime @default(now())
+}

@@ -2,8 +2,7 @@ import { IdentificationIcon, DocumentIcon } from '@heroicons/react/24/solid'
 import { Footer } from '~/components/Footer';
 import PostInstace from '~/lib/post';
 import Link from 'next/link';
-import { parseISO, format } from 'date-fns';
-import readingTime from 'reading-time';
+import { PostPreview } from '~/components/PostPreview';
 
 function HomePage({ posts }) {
   return(
@@ -39,15 +38,8 @@ function HomePage({ posts }) {
         <div className="mx-auto max-w-2xl mt-10">
           <h3 className="text-2xl text-gray-300">All Posts</h3>
           <div className="mt-4">
-            {posts.map(({ title, date, slug, content}) => (
-              <Link href={`/blog/${slug}`} key={slug}>
-                <div className="bg-white/5 hover:bg-white/10 p-4 rounded-lg cursor-pointer mb-6 transition-all">
-                  <h2 className="text-gray-300 text-xl">{title}</h2>
-                  <div className="text-gray-400 text-sm">
-                    {format(parseISO(date), 'MMMM dd, yyyy')}  • {readingTime(content).text} • 123 views
-                  </div>
-                </div> 
-              </Link>
+            {posts.map((props, key) => (
+              <PostPreview {...props} key={key}/>
             ))}
           </div>
         </div>

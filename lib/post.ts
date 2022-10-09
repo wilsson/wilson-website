@@ -8,6 +8,7 @@ class Post {
       title,
       date,
       content,
+      "slug": slug.current,
       coverImage,
     }`;
     const post = await sanityClient.fetch(query, {

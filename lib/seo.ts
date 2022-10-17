@@ -1,21 +1,26 @@
 import type { DefaultSeoProps } from 'next-seo';
 
+const title = 'Wilson Flores';
+const domain = 'https://wilsonft83.dev';
+const twitter = '@wilsson83';
+const bannerImage = 'https://wilsonft83.dev/wilson-banner.png';
+
 export const seo: DefaultSeoProps = {
-  title: 'wilson',
+  title,
   openGraph: {
-    title: 'wilson',
+    title,
     type: 'website',
-    url: 'https://wilsonft83.dev',
-    site_name: 'wilson',
+    url: domain,
+    site_name: title,
     images: [
       {
-        url: 'https://wilsonft83.dev/wilson-banner.png',
-        alt: 'wilson',
-      }
+        url: bannerImage,
+        alt: title,
+      },
     ],
   },
   twitter: {
-    handle: '@wilsson83',
+    handle: twitter,
     cardType: 'summary_large_image',
   },
 };

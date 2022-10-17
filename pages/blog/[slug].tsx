@@ -119,6 +119,7 @@ export async function getStaticProps({ params }) {
     props: {
       post,
       mdxSource
-    } 
+    },
+    revalidate: 60,
   };
 }

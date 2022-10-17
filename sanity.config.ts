@@ -5,8 +5,8 @@ import { markdownSchema } from 'sanity-plugin-markdown';
 export default createConfig({
   name: 'default',
   title: 'wilson-website',
-  projectId: import.meta.env.NEXT_PUBLIC_SANITY_DATASET,
-  dataset: import.meta.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
+  projectId: import.meta.env.SANITY_STUDIO_PROJECT_ID,
+  dataset: import.meta.env.SANITY_STUDIO_DATASET,
   plugins: [deskTool(), markdownSchema()],
   schema: {
     types: [

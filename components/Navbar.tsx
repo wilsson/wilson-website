@@ -1,5 +1,9 @@
 import Link from 'next/link';
-import { IdentificationIcon, DocumentIcon, HomeIcon } from '@heroicons/react/24/solid';
+import {
+  IdentificationIcon,
+  DocumentIcon,
+  HomeIcon,
+} from '@heroicons/react/24/solid';
 
 interface Route {
   path: string;
@@ -36,11 +40,11 @@ export const Navbar = () => (
             </div>
             <div className="text-gray-300">{title}</div>
           </div>
-        </Link> 
+        </Link>
       ))}
     </div>
     <div className="mx-auto max-w-2xl w-full mt-4">
       <hr className="border border-[#221a29]" />
     </div>
- </div>
+  </div>
 );

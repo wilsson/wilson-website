@@ -1,41 +1,33 @@
-import { sanityClient } from './sanity-server';
+import fs from 'fs';
+import path from 'path';
 import { mdxToHtml } from './mdx';
 
-class Post {
+const contentDir = path.join(process.cwd(), 'pages/blog/_mdx-content');
 
+class Post {
   async getBySlug(slug: string) {
-    const query = `*[_type == "post" && slug.current == $slug][0]{
-      title,
-      date,
-      content,
-      "slug": slug.current,
-      coverImage,
-    }`;
-    const post = await sanityClient.fetch(query, {
-      slug: slug,
-    });
-    const mdxSource = await mdxToHtml(post.content);
+    const fileName = slug + '.mdx';
+    const filePath = path.join(contentDir, fileName);
+    const fileContent = fs.readFileSync(filePath, 'utf-8');
+    const contentSerialize = await mdxToHtml(fileContent);
     return {
-      post,
-      mdxSource,
+      frontmatter: contentSerialize.frontmatter,
+      content: contentSerialize,
+      slug: path.parse(fileName).name,
+      rawContent: fileContent,
     };
   }
 
-  async getAllSlugs() {
-    const query = `*[_type == "post" && defined(slug.current)][].slug.current`;
-    const paths = await sanityClient.fetch(query);
-    return paths;
-  }
-
   async getAllPosts() {
-    const query = `*[_type == "post"] | order(date desc){
-      title,
-      date,
-      content,
-      "slug": slug.current,
-    }`;
-    const posts = await sanityClient.fetch(query);
-    return posts;
+    const files = fs.readdirSync(contentDir);
+    const posts = await Promise.all(
+      files.map(async (file) => await this.getBySlug(path.parse(file).name))
+    );
+    return posts.sort(
+      (a: any, b: any) =>
+        new Date(b.frontmatter.date).getTime() -
+        new Date(a.frontmatter.date).getTime()
+    );
   }
 }
 

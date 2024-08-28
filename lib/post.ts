@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { mdxToHtml } from './mdx';
 
-const contentDir = path.join(process.cwd(), 'pages/blog/_mdx-content');
+const contentDir = path.join(process.cwd(), 'posts');
 
 class Post {
   async getBySlug(slug: string) {

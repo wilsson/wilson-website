@@ -1,16 +1,19 @@
 import Script from 'next/script';
-import type { AppProps } from 'next/app';
-import { DefaultSeo } from "next-seo"
+import { DefaultSeo as DefaultSeoComponent } from 'next-seo';
 import { seo } from '~/lib/seo';
 import { useAnalytics } from '~/lib/useAnalytics';
 import '~/styles/globals.css';
 
-function App({ Component, pageProps }: AppProps) {
+const DefaultSeo = DefaultSeoComponent as any;
+function App({ Component, pageProps }) {
   useAnalytics();
-  return(
+  return (
     <>
       <DefaultSeo {...seo} />
-      <Script strategy="afterInteractive" src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}`} />
+      <Script
+        strategy="afterInteractive"
+        src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}`}
+      />
       <Script strategy="afterInteractive">
         {`
           window.dataLayer = window.dataLayer || [];
@@ -23,8 +26,7 @@ function App({ Component, pageProps }: AppProps) {
       </Script>
       <Component {...pageProps} />
     </>
-  )
+  );
 }
 
-
-export default App
+export default App;

@@ -3,16 +3,16 @@ import { motion } from 'framer-motion';
 import { parseISO, format } from 'date-fns';
 import { MDXRemote } from 'next-mdx-remote';
 import readingTime from 'reading-time';
-import { NextSeo } from 'next-seo';
+import { NextSeo as NextSeoNext } from 'next-seo';
 import { EllipsisHorizontalIcon } from '@heroicons/react/24/solid';
 import { LikeIcon } from '~/components/LikeIcon';
 import { Navbar } from '~/components/Navbar';
 import { Footer } from '~/components/Footer';
 import { useLikes } from '~/lib/useLikes';
 import { useViews } from '~/lib/useViews';
-import path from 'path';
 import PostInstance from '~/lib/post';
 
+const NextSeo = NextSeoNext as any;
 const optionsAnimateLike = {
   hide: {
     translateY: -40,

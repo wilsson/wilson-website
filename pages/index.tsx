@@ -3,7 +3,9 @@ import { Footer } from '~/components/Footer';
 import PostInstace from '~/lib/post';
 import Link from 'next/link';
 import { PostPreview } from '~/components/PostPreview';
-import { NextSeo } from 'next-seo';
+import { NextSeo as NextSeoNext } from 'next-seo';
+
+const NextSeo = NextSeoNext as any;
 
 function HomePage({ posts }) {
   return (

@@ -10,8 +10,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "sanity-start": "sanity start",
-    "postbuild": "cp -r ./posts ./.next"
+    "sanity-start": "sanity start"
   },
   "dependencies": {
     "@heroicons/react": "2.0.11",

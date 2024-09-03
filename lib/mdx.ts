@@ -2,13 +2,32 @@ import { serialize } from 'next-mdx-remote/serialize';
 import remarkGfm from 'remark-gfm';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import rehypeSlug from 'rehype-slug';
-import rehypePrettyCode from 'rehype-pretty-code';
-import oneDarkProTheme from 'shiki/themes/one-dark-pro.json';
+import rehypePrettyCode, {
+  Options as RehypeCodeOptions,
+} from 'rehype-pretty-code';
+import * as shiki from 'shiki';
+import path from 'path';
 
-console.log('process.env.NODE_ENV', process.env.NODE_ENV);
+const getShikiPath = (): string => {
+  return path.join(process.cwd(), 'public/shiki');
+};
+
+const getHighlighter: RehypeCodeOptions['getHighlighter'] = async (options) => {
+  const highlighter = await shiki.getHighlighter({
+    ...(options as any),
+    paths: {
+      languages: `${getShikiPath()}/languages/`,
+      themes: `${getShikiPath()}/themes/`,
+    },
+  });
+  return highlighter;
+};
+
+/** @type {import('rehype-pretty-code').Options} */
 const options = {
   // Use one of Shiki's packaged themes
-  theme: oneDarkProTheme,
+  theme: 'one-dark-pro',
+
   // Or your own JSON theme
   onVisitLine(node) {
     // Prevent lines from collapsing in `display: grid` mode, and
@@ -24,6 +43,7 @@ const options = {
   onVisitHighlightedWord(node) {
     node.properties.className = ['word'];
   },
+  ...(process.env.NODE_ENV === 'production' && { getHighlighter }),
 };
 
 export const mdxToHtml = async (source: string) => {

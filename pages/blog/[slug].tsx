@@ -118,7 +118,6 @@ const Post = ({ post, mdxSource }) => {
             </div>
           </div>
           <div className="prose dark:prose-invert max-w-none">
-            {/*<img src={urlFor(post.coverImage).url()} alt={post.title} />*/}
             <img src={post.cover} alt={post.title} />
             <MDXRemote {...mdxSource} />
           </div>
@@ -140,7 +139,6 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-  console.log('slug', params.slug);
   const result = await PostInstance.getBySlug(params.slug);
   return {
     props: {

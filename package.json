@@ -10,8 +10,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "clean": "rm -rf ./node_modules",
-    "installCustom": "yarn clean && yarn install",
+    "cp:themes": "cp -r ./node_modules/shiki/themes ./public/shiki/themes",
+    "cp:languages": "cp -r ./node_modules/shiki/languages ./public/shiki/languages",
+    "create:shiki": "mkdirp ./public/shiki",
+    "postinstall": "yarn create:shiki && yarn cp:themes && yarn cp:languages",
     "sanity-start": "sanity start"
   },
   "dependencies": {
@@ -40,7 +42,7 @@
     "remark-gfm": "4.0.0",
     "sanity": "3.0.0-dev-preview.20",
     "sanity-plugin-markdown": "3.0.0-v3-studio.2",
-    "shiki": "0.11.1",
+    "shiki": "0.10.1",
     "styled-components": "^5.2.0",
     "swr": "1.3.0",
     "tailwindcss": "3.1.8",
@@ -49,6 +51,7 @@
   "devDependencies": {
     "@types/node": "18.7.23",
     "@types/react": "18.0.21",
+    "mkdirp": "3.0.1",
     "prisma": "4.10.0",
     "typescript": "4.8.4"
   }

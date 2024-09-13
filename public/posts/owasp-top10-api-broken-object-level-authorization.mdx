@@ -1,0 +1,117 @@
+---
+title: OWASP TOP 10 API- Broken Object Level Authorization
+date: '2024-08-28'
+cover: https://github.com/user-attachments/assets/faf7c76b-e925-47d1-b948-63c4b17822d5
+---
+
+Consiste en que un atacante pueda acceder a datos que no debería poder ver, modificar o eliminar, esto suele darse por que no se implementan mecanismos de autorización.
+
+Normalmente cuando construimos una API REST creamos un CRUD:
+
+- Crear (Create)
+- Leer (Read)
+- Actualizar (Update)
+- Eliminar (Delete)
+
+Imaginemos que tenemos una API de libros:
+
+![](https://github.com/user-attachments/assets/1211d49b-a9b0-4001-8a5b-620dde493498)
+
+En la imagen se aprecia que el usuario con el id puede tener acceso a operaciones como actualizar y eliminar sobre el recurso de libros del usuario 2 que es autor del libro con id 2.
+
+Esto suele darse ya que no se cuenta con un mecanismo de autorización, además de ello el atacante puede intuir los ids de los libros ya que son id incrementales.
+
+### Como prevenir la vulnerabilidad
+
+1. Implemente un mecanismo de autorización adecuado que se base en las políticas y la jerarquía de los usuarios.
+2. Utilice un mecanismo de autorización para verificar si el usuario que inició sesión tiene acceso para realizar la acción solicitada.
+3. Los ids no deben ser incrementales para ello use GUID o UUID que generara identificadores únicos.
+4. Implementar pruebas para evaluar la vulnerabilidad.
+
+### (1) Mecanismos de autorización
+
+`RBAC (Role-Based Access Control):` El mecanismo se basa en asignar permisos a roles definidos y luego dichos roles se asignan a los usuarios.
+
+![Esquema de base de datos de ejemplo](https://github.com/user-attachments/assets/0ec90120-0bb6-479d-ad00-80ed6b1e4ebd)
+
+Ahora a nivel de código necesitamos hacer ciertas validaciones para poder garantizar que se esten aplicando de forma correcta los permisos necesarios para cada usuario:
+
+- (1) Obtenemos el token de autorización extraído de la cabecera authorization, este token es generado cuando iniciamos sesión.
+- (2) Buscamos todos los roles asociados al usuario.
+- (3) Buscamos todos los permisos asociados a todos los roles del usuario.
+- (4) Buscamos si entre todos los permisos el id del permiso al que queremos accionar la cual está en una constante llamada `EDIT_USERS_PERMISSIONS_ID`.
+- (5) Validamos si tiene el permiso, de lo contrató retornamos un mensaje de no autorizado.
+- (6) Realizamos la operación solicitada.
+
+```ts {3,8,15,26,38}
+app.patch('/users', async (req: Request, res: Response) => {
+  try {
+    // (1)
+    const token = req.headers['authorization'] || '';
+    const payload = jwt.verify(token, JWT_SECRET);
+    const { id } = payload as any;
+
+    // (2)
+    const userRole = await prisma.userRole.findMany({
+      where: {
+        userId: id,
+      },
+    });
+
+    // (3)
+    const permissions = await Promise.all(
+      userRole.map((role) =>
+        prisma.rolePermission.findMany({
+          where: {
+            roleId: role.id,
+          },
+        })
+      )
+    );
+
+    // (4)
+    const hasPermission = permissions
+      .flat()
+      .find(
+        (permission) => permission.permissionId === EDIT_USERS_PERMISSIONS_ID
+      );
+
+    // (5)
+    if (!Boolean(hasPermission)) {
+      return res.status(403).send('Unauthorised');
+    }
+
+    // (6)
+    const user = await prisma.user.update({
+      data: {
+        email: req.body.email,
+      },
+      where: {
+        id: req.body.id,
+      },
+    });
+
+    res.send({
+      data: user,
+    });
+  } catch (e) {
+    res.status(403).send('Unauthorised');
+  }
+});
+```
+
+`ABAC (Attribute-Based Access Control):` Dicho mecanismo se basa en una conbinación de atributos asociadas al usuario en base a la organización, a diferencia de RBAC el ABAC es mucho mas granular y te da mayor flexibilidad.
+
+![Esquema de base de datos de ejemplo](https://github.com/user-attachments/assets/0d1092b0-082f-4057-b2ef-a310dea20b20)
+
+### (2) Verificación del permiso del usuario
+
+![Esquema de base de datos de ejemplo](https://github.com/user-attachments/assets/b23b26a0-cf8a-43d4-adb9-887650a69baf)
+
+### (3) UUID / GUID
+
+### (4) Pruebas de vulnerabilidad
+
+### Referencias
+
+- https://owasp.org/API-Security/editions/2023/en/0xa1-broken-object-level-authorization/

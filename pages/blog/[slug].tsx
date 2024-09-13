@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { motion } from 'framer-motion';
 import { parseISO, format } from 'date-fns';
 import { MDXRemote } from 'next-mdx-remote';
@@ -11,6 +12,7 @@ import { Footer } from '~/components/Footer';
 import { useLikes } from '~/lib/useLikes';
 import { useViews } from '~/lib/useViews';
 import PostInstance from '~/lib/post';
+import { useState } from 'react';
 
 const NextSeo = NextSeoNext as any;
 const optionsAnimateLike = {
@@ -22,6 +24,66 @@ const optionsAnimateLike = {
     translateY: [0, -40],
     opacity: [0, 1, 0],
   },
+};
+
+const Image = (props) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const toggleExpand = () => {
+    setIsExpanded(!isExpanded);
+  };
+
+  useEffect(() => {
+    if (isExpanded) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        setIsExpanded(!isExpanded);
+      }
+    };
+
+    if (isExpanded) {
+      window.addEventListener('keydown', handleKeyDown);
+    } else {
+      window.removeEventListener('keydown', handleKeyDown);
+    }
+
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isExpanded]);
+  console.log('p', props);
+  return (
+    <>
+      <img
+        className="cursor-zoom-in rounded"
+        {...props}
+        onClick={toggleExpand}
+      />
+      {props?.alt && (
+        <span className="text-xs italic block text-center -mt-[15px]">
+          ({props?.alt})
+        </span>
+      )}
+      {isExpanded &&
+        createPortal(
+          <div
+            className="fixed top-0 left-0 w-screen h-screen flex justify-center items-center bg-black/[.08]"
+            onClick={toggleExpand}
+          >
+            <div
+              className="max-w-[90%] max-h-[90%] relative overflow-auto"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <img {...props} className="rounded w-full h-auto" />
+            </div>
+          </div>,
+          document.getElementById('__next')
+        )}
+    </>
+  );
 };
 
 const Post = ({ post, mdxSource }) => {
@@ -119,7 +181,12 @@ const Post = ({ post, mdxSource }) => {
           </div>
           <div className="prose dark:prose-invert max-w-none">
             <img src={post.cover} alt={post.title} />
-            <MDXRemote {...mdxSource} />
+            <MDXRemote
+              {...mdxSource}
+              components={{
+                img: Image,
+              }}
+            />
           </div>
         </article>
         <Footer />
